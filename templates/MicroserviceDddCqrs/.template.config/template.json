@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Kozelev Artem",
+  "classifications": [ 
+	"CQRS",
+	"DDD",
+	"Microservice"
+  ],
+  "identity": "MicroserviceDddCqrs",
+  "name": "Microservice DDD CQRS",
+  "shortName": "microserviceDddCqrs",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sourceName": "ProjectName__"
+}

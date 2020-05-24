@@ -1,0 +1,58 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Application.Common.Interfaces;
+using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+
+namespace Application.System.Commands.SeedSampleData
+{
+    public class SampleDataSeeder
+    {
+        private readonly IAppDbContext _context;
+
+        public SampleDataSeeder(IAppDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task SeedData(CancellationToken cancellationToken)
+        {
+            await SeedProducts(cancellationToken);
+        }
+
+        public async Task SeedProducts(CancellationToken cancellationToken)
+        {
+            var anyProducts = await _context.Products.AnyAsync(cancellationToken);
+            if (!anyProducts)
+            {
+                await _context.Products.AddRangeAsync(new List<Product>
+                {
+                    new Product
+                    {
+                        Name = "Sample Product Common",
+                        Materials = new List<Material>
+                        {
+                            new Material("wood", TimeSpan.FromDays(365 * 1)),
+                            new Material("iron", TimeSpan.FromDays(365 * 4))
+                        },
+                        ProductType = ProductType.Common
+                    },
+                    new Product
+                    {
+                        Name = "Sample Product Vip",
+                        Materials = new List<Material>
+                        {
+                            new Material("steel", TimeSpan.FromDays(365 * 16)),
+                            new Material("cutton", TimeSpan.FromDays(365 * 2))
+                        },
+                        ProductType = ProductType.Vip
+                    }
+                }, cancellationToken);
+
+                await _context.SaveChangesAsync(cancellationToken);
+            }
+        }
+    }
+}

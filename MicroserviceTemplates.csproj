@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageType>Template</PackageType>
-    <PackageVersion>1.0</PackageVersion>
+    <PackageVersion>1.0.1</PackageVersion>
     <PackageId>Demonel.MicroserviceTemplates</PackageId>
     <Title>Microservice Templates</Title>
     <Authors>Kozelev Artem</Authors>
@@ -15,8 +15,11 @@
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <ContentTargetFolders>content</ContentTargetFolders>
 	
-    <RepositoryUrl>https://github.com/Demonell/MicroserviceTemplates</RepositoryUrl>
+    <RepositoryUrl>https://github.com/Demonell/Demonel.MicroserviceTemplates</RepositoryUrl>
     <PackageReleaseNotes>
+      1.0.1
+	  - fixed repository url
+	  
       1.0
 	  - package released
     </PackageReleaseNotes>

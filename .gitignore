@@ -431,3 +431,17 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+Program.cs
+templates/**/[Dd]ebug/
+templates/**/[Dd]ebugPublic/
+templates/**/[Rr]elease/
+templates/**/[Rr]eleases/
+templates/**/x64/
+templates/**/x86/
+templates/**/[Aa][Rr][Mm]/
+templates/**/[Aa][Rr][Mm]64/
+templates/**/bld/
+templates/**/[Bb]in/
+templates/**/[Oo]bj/
+templates/**/[Ll]og/

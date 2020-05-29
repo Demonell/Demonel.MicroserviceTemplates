@@ -28,7 +28,7 @@ namespace WebApi.Controllers
         /// <response code="404">Объект не найден</response> 
         /// <response code="500">Внутренняя ошибка</response>
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(ProductVm), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiErrorVm), StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -50,7 +50,7 @@ namespace WebApi.Controllers
         ///     }
         ///
         /// </remarks>
-        /// <response code="200">Успех! Возвращает уникальный идентификатор созданного продукта</response>
+        /// <response code="201">Успех! Возвращает уникальный идентификатор созданного продукта</response>
         /// <response code="400">Ошибка валидации полей</response> 
         /// <response code="422">Ошибка обработки запроса
         /// <para>Возможные коды ответа:</para>
@@ -58,7 +58,7 @@ namespace WebApi.Controllers
         /// </response> 
         /// <response code="500">Внутренняя ошибка</response>
         [HttpPost]
-        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiErrorVm), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

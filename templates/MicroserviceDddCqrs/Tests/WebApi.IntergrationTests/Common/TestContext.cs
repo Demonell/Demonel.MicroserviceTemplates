@@ -6,7 +6,7 @@ using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
-namespace WebApi.IntergrationTests.Common
+namespace Application.UnitTests.Common
 {
     public class TestContext : IDisposable
     {
@@ -51,7 +51,7 @@ namespace WebApi.IntergrationTests.Common
 
         private void InitializeDbForTests()
         {
-            TestProduct1 = new Product
+            TestProduct1 = Context.Products.Add(new Product
             {
                 Name = nameof(TestProduct1),
                 ProductType = ProductType.Common,
@@ -60,10 +60,9 @@ namespace WebApi.IntergrationTests.Common
                     new Material("wood", TimeSpan.FromDays(365)),
                     new Material("iron", TimeSpan.FromDays(4 * 365)),
                 }
-            };
-            Context.Products.Add(TestProduct1);
+            }).Entity;
 
-            TestProduct2 = new Product
+            TestProduct2 = Context.Products.Add(new Product
             {
                 Name = nameof(TestProduct2),
                 ProductType = ProductType.Vip,
@@ -72,8 +71,7 @@ namespace WebApi.IntergrationTests.Common
                     new Material("steel", TimeSpan.FromDays(16 * 365)),
                     new Material("cutton", TimeSpan.FromDays(6 * 365)),
                 }
-            };
-            Context.Products.Add(TestProduct2);
+            }).Entity;
 
             Context.SaveChanges();
         }

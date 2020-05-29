@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Application.Common.Interfaces;
+using Application.UnitTests.Common;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;

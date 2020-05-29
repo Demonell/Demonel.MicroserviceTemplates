@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageType>Template</PackageType>
-    <PackageVersion>1.0.2</PackageVersion>
+    <PackageVersion>1.0.3</PackageVersion>
     <PackageId>Demonel.MicroserviceTemplates</PackageId>
     <Title>Microservice Templates</Title>
     <Authors>Kozelev Artem</Authors>
@@ -14,17 +14,20 @@
     <IncludeContentInPack>true</IncludeContentInPack>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <ContentTargetFolders>content</ContentTargetFolders>
-	
+
     <RepositoryUrl>https://github.com/Demonell/Demonel.MicroserviceTemplates</RepositoryUrl>
     <PackageReleaseNotes>
+      1.0.3
+      - Removed return type from ProducesResponseType on 200-201 status codes
+
       1.0.2
-	  - AuditableEntity CreatedBy property changes only if wasn't specified
-    
+      - AuditableEntity CreatedBy property changes only if wasn't specified
+
       1.0.1
-	  - fixed repository url
-	  
+      - fixed repository url
+
       1.0
-	  - package released
+      - package released
     </PackageReleaseNotes>
   </PropertyGroup>
 

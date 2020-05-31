@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Application.Common.Models;
 using Application.Products.Models;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.IntergrationTests.Common;
@@ -10,12 +12,12 @@ using Xunit.Abstractions;
 
 namespace WebApi.IntergrationTests.Controllers.Products
 {
-    public class Get : IClassFixture<CustomWebApplicationFactory<Startup>>
+    public class GetAll : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
         private readonly CustomWebApplicationFactory<Startup> _factory;
         private readonly HttpClient _client;
 
-        public Get(CustomWebApplicationFactory<Startup> factory, ITestOutputHelper output)
+        public GetAll(CustomWebApplicationFactory<Startup> factory, ITestOutputHelper output)
         {
             _factory = factory;
             factory.Output = output;
@@ -25,36 +27,29 @@ namespace WebApi.IntergrationTests.Controllers.Products
         [Fact]
         public async Task GivenValidRequest_ReturnsProductVm()
         {
-            var response = await _client.GetAsync($"/api/products/{_factory.TestContext.TestProductCommon.Id}");
+            var response = await _client.GetAsync($"/api/products?{Uri.EscapeDataString("productType=1&sort=-id,+name")}");
 
             response.EnsureSuccessStatusCode();
 
-            var entity = await Utilities.GetResponseContent<ProductVm>(response);
+            var entity = await Utilities.GetResponseContent<TotalList<ProductVm>>(response);
 
             Assert.NotNull(entity);
-            Assert.IsType<ProductVm>(entity);
-            Assert.NotEmpty(entity.Name);
-            Assert.NotEmpty(entity.Materials);
+            Assert.IsType<TotalList<ProductVm>>(entity);
+            Assert.NotEmpty(entity.Items);
+            Assert.NotEmpty(entity.Items.First().Name);
+            Assert.NotEmpty(entity.Items.First().Materials.First().Name);
         }
 
         [Fact]
         public async Task GivenInvalidId_ReturnsValidationProblemDetails()
         {
-            var response = await _client.GetAsync($"/api/products/notnumberatall");
+            var response = await _client.GetAsync("/api/products?sort=-nonExistedField");
 
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
             var entity = await Utilities.GetResponseContent<ValidationProblemDetails>(response);
 
-            Assert.Equal("id", entity.Errors.First().Key);
-        }
-
-        [Fact]
-        public async Task GivenNonExistedId_ReturnsNotFoundStatusCode()
-        {
-            var response = await _client.GetAsync($"/api/products/{int.MaxValue}");
-
-            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+            Assert.Equal("Sort", entity.Errors.First().Key);
         }
     }
 }

@@ -6,6 +6,7 @@ using NSwag;
 using NSwag.Generation.Processors;
 using NSwag.Generation.Processors.Contexts;
 using NSwag.Generation.Processors.Security;
+using WebApi.Filters;
 using WebApi.Options;
 using ZymLabs.NSwag.FluentValidation;
 
@@ -45,6 +46,7 @@ namespace WebApi.Middlewares
 
                 configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("oauth2"));
                 configure.OperationProcessors.Add(new AuthOperationProcessor());
+                configure.OperationProcessors.Add(new JsonIgnoreQueryOperationFilter());
             });
 
             return services;

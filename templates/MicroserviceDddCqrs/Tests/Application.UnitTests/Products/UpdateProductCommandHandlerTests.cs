@@ -14,13 +14,16 @@ namespace Application.UnitTests.Products
 {
     public class UpdateProductCommandHandlerTests : TestBase
     {
+        private readonly UpdateProductCommandHandler _handler;
         private readonly UpdateProductCommand _command;
 
         public UpdateProductCommandHandlerTests()
         {
+            _handler = new UpdateProductCommandHandler(Context, Mapper);
+
             _command = new UpdateProductCommand
             {
-                Id = TestContext.TestProduct1.Id,
+                Id = TestContext.TestProductCommon.Id,
                 Name = "new name",
                 ProductType = ProductType.Vip,
                 Materials = new List<MaterialVm>
@@ -34,14 +37,10 @@ namespace Application.UnitTests.Products
         [Fact]
         public async Task GivenValidCommand_Pass()
         {
-            var handler = new UpdateProductCommandHandler(Context, Mapper);
-
-            await handler.Handle(_command, CancellationToken.None);
+            await _handler.Handle(_command, CancellationToken.None);
 
             var product = await Context.Products.FirstOrDefaultAsync(u => u.Id == _command.Id);
 
-            Assert.NotNull(product);
-            Assert.Equal(_command.Name, product.Name);
             Assert.Equal(TestUserId, product.LastModifiedBy);
             Assert.Equal(DateTime.Now.Year, product.LastModified?.Year);
         }
@@ -49,11 +48,9 @@ namespace Application.UnitTests.Products
         [Fact]
         public async Task GivenSameName_Pass()
         {
-            _command.Name = TestContext.TestProduct1.Name;
+            _command.Name = TestContext.TestProductCommon.Name;
 
-            var handler = new UpdateProductCommandHandler(Context, Mapper);
-
-            await handler.Handle(_command, CancellationToken.None);
+            await _handler.Handle(_command, CancellationToken.None);
         }
 
         [Fact]
@@ -61,21 +58,17 @@ namespace Application.UnitTests.Products
         {
             _command.Id = int.MaxValue;
 
-            var handler = new UpdateProductCommandHandler(Context, Mapper);
-
             await Assert.ThrowsAsync<NotFoundException>(async () =>
-                await handler.Handle(_command, CancellationToken.None));
+                await _handler.Handle(_command, CancellationToken.None));
         }
 
         [Fact]
         public async Task GivenAlreadyUsedName_RaiseProductNameAlreadyInUseException()
         {
-            _command.Name = TestContext.TestProduct2.Name;
-
-            var handler = new UpdateProductCommandHandler(Context, Mapper);
+            _command.Name = TestContext.TestProductVip1.Name;
 
             await Assert.ThrowsAsync<ProductNameAlreadyInUseException>(async () =>
-                await handler.Handle(_command, CancellationToken.None));
+                await _handler.Handle(_command, CancellationToken.None));
         }
     }
 }

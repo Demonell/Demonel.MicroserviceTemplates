@@ -27,7 +27,7 @@ namespace WebApi.IntergrationTests.Controllers.Products
 
             _command = new UpdateProductCommand
             {
-                Id = _factory.TestContext.TestProduct1.Id,
+                Id = _factory.TestContext.TestProductCommon.Id,
                 Name = "test",
                 ProductType = ProductType.Vip,
                 Materials = null
@@ -39,7 +39,7 @@ namespace WebApi.IntergrationTests.Controllers.Products
         {
             var content = Utilities.GetRequestContent(_command);
 
-            var response = await _client.PutAsync($"/api/products/update/{_command.Id}", content);
+            var response = await _client.PutAsync($"/api/products/{_command.Id}", content);
 
             response.EnsureSuccessStatusCode();
         }
@@ -49,7 +49,7 @@ namespace WebApi.IntergrationTests.Controllers.Products
         {
             var content = Utilities.GetRequestContent(_command);
 
-            var response = await _client.PutAsync("/api/products/update/InvalidId", content);
+            var response = await _client.PutAsync("/api/products/InvalidId", content);
 
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
@@ -63,7 +63,7 @@ namespace WebApi.IntergrationTests.Controllers.Products
         {
             var content = Utilities.GetRequestContent(_command);
 
-            var response = await _client.PutAsync($"/api/products/update/{int.MaxValue}", content);
+            var response = await _client.PutAsync($"/api/products/{int.MaxValue}", content);
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
@@ -71,11 +71,11 @@ namespace WebApi.IntergrationTests.Controllers.Products
         [Fact]
         public async Task GivenAlreadyUsedName_ReturnsProductNameAlreadyInUseException()
         {
-            _command.Name = _factory.TestContext.TestProduct2.Name;
+            _command.Name = _factory.TestContext.TestProductVip1.Name;
 
             var content = Utilities.GetRequestContent(_command);
 
-            var response = await _client.PutAsync($"/api/products/update/{_command.Id}", content);
+            var response = await _client.PutAsync($"/api/products/{_command.Id}", content);
 
             Assert.Equal(HttpStatusCode.UnprocessableEntity, response.StatusCode);
 

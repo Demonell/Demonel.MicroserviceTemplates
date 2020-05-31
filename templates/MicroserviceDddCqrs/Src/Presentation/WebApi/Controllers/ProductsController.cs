@@ -1,8 +1,10 @@
 ﻿using System.Threading.Tasks;
+using Application.Common.Models;
 using Application.Products.Commands.CreateProduct;
 using Application.Products.Commands.UpdateProduct;
 using Application.Products.Models;
 using Application.Products.Queries.GetProduct;
+using Application.Products.Queries.GetProducts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +21,28 @@ namespace WebApi.Controllers
         /// <remarks>
         /// Пример запроса:
         ///
-        ///     GET /api/products/get/1
+        ///     GET /api/products
+        ///
+        /// </remarks>
+        /// <response code="200">Успех! Возвращает объект с информацией о продукте</response>
+        /// <response code="400">Ошибка валидации полей</response> 
+        /// <response code="404">Объект не найден</response> 
+        /// <response code="500">Внутренняя ошибка</response>
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<TotalList<ProductVm>> Get([FromQuery] GetProductsQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        /// <summary>
+        /// Получение информации о продукте
+        /// </summary>
+        /// <remarks>
+        /// Пример запроса:
+        ///
+        ///     GET /api/products/1
         ///
         /// </remarks>
         /// <param name="id">Уникальный идентификатор продукта</param>
@@ -57,7 +80,7 @@ namespace WebApi.Controllers
         /// <para>ProductNameAlreadyInUseException - имя продукта уже используется</para>
         /// </response> 
         /// <response code="500">Внутренняя ошибка</response>
-        [HttpPost]
+        [HttpPost("[action]")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiErrorVm), StatusCodes.Status422UnprocessableEntity)]
@@ -73,7 +96,7 @@ namespace WebApi.Controllers
         /// <remarks>
         /// Пример запроса:
         ///
-        ///     PUT /api/products/update/1
+        ///     PUT /api/products/1
         ///     {
         ///         "name": "new product name",
         ///         "productType": 1

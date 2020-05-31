@@ -46,30 +46,48 @@ namespace Application.UnitTests.Common
             return context;
         }
 
-        public Product TestProduct1;
-        public Product TestProduct2;
+        public Product TestProductCommon;
+        public Product TestProductVip1;
+        public Product TestProductVip2;
 
         private void InitializeDbForTests()
         {
-            TestProduct1 = Context.Products.Add(new Product
+            TestProductCommon = Context.Products.Add(new Product
             {
-                Name = nameof(TestProduct1),
+                Name = nameof(TestProductCommon),
                 ProductType = ProductType.Common,
                 Materials = new List<Material>
                 {
                     new Material("wood", TimeSpan.FromDays(365)),
                     new Material("iron", TimeSpan.FromDays(4 * 365)),
+                    new Material("aaa", TimeSpan.FromDays(4 * 365)),
+                    new Material("xxx", TimeSpan.FromDays(4 * 365)),
                 }
             }).Entity;
 
-            TestProduct2 = Context.Products.Add(new Product
+            TestProductVip1 = Context.Products.Add(new Product
             {
-                Name = nameof(TestProduct2),
+                Name = nameof(TestProductVip1),
                 ProductType = ProductType.Vip,
                 Materials = new List<Material>
                 {
                     new Material("steel", TimeSpan.FromDays(16 * 365)),
-                    new Material("cutton", TimeSpan.FromDays(6 * 365)),
+                    new Material("fur", TimeSpan.FromDays(6 * 365)),
+                    new Material("bbb", TimeSpan.FromDays(6 * 365)),
+                    new Material("yyy", TimeSpan.FromDays(6 * 365)),
+                }
+            }).Entity;
+
+            TestProductVip2 = Context.Products.Add(new Product
+            {
+                Name = nameof(TestProductVip2),
+                ProductType = ProductType.Vip,
+                Materials = new List<Material>
+                {
+                    new Material("obsidian", TimeSpan.FromDays(8 * 365)),
+                    new Material("steel", TimeSpan.FromDays(16 * 365)),
+                    new Material("ccc", TimeSpan.FromDays(16 * 365)),
+                    new Material("zzz", TimeSpan.FromDays(16 * 365)),
                 }
             }).Entity;
 

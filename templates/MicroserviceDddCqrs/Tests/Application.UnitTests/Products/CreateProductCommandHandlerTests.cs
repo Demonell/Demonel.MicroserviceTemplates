@@ -14,10 +14,13 @@ namespace Application.UnitTests.Products
 {
     public class CreateProductCommandHandlerTests : TestBase
     {
+        private readonly CreateProductCommandHandler _handler;
         private readonly CreateProductCommand _command;
 
         public CreateProductCommandHandlerTests()
         {
+            _handler = new CreateProductCommandHandler(Context, Mapper);
+
             _command = new CreateProductCommand
             {
                 Name = "test",
@@ -33,9 +36,7 @@ namespace Application.UnitTests.Products
         [Fact]
         public async Task GivenValidCommand_Pass()
         {
-            var handler = new CreateProductCommandHandler(Context, Mapper);
-
-            var id = await handler.Handle(_command, CancellationToken.None);
+            var id = await _handler.Handle(_command, CancellationToken.None);
 
             var product = await Context.Products.FirstOrDefaultAsync(p => p.Id == id);
 
@@ -50,9 +51,7 @@ namespace Application.UnitTests.Products
         {
             _command.Materials = null;
 
-            var handler = new CreateProductCommandHandler(Context, Mapper);
-
-            var id = await handler.Handle(_command, CancellationToken.None);
+            var id = await _handler.Handle(_command, CancellationToken.None);
 
             var product = await Context.Products.FirstOrDefaultAsync(p => p.Id == id);
 
@@ -63,12 +62,10 @@ namespace Application.UnitTests.Products
         [Fact]
         public async Task GivenAlreadyUsedName_RaiseProductNameAlreadyInUseException()
         {
-            _command.Name = TestContext.TestProduct1.Name;
-
-            var handler = new CreateProductCommandHandler(Context, Mapper);
+            _command.Name = TestContext.TestProductCommon.Name;
 
             await Assert.ThrowsAsync<ProductNameAlreadyInUseException>(async () =>
-                await handler.Handle(_command, CancellationToken.None));
+                await _handler.Handle(_command, CancellationToken.None));
         }
     }
 }

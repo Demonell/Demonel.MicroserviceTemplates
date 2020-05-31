@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageType>Template</PackageType>
-    <PackageVersion>1.0.3</PackageVersion>
+    <PackageVersion>1.0.4</PackageVersion>
     <PackageId>Demonel.MicroserviceTemplates</PackageId>
     <Title>Microservice Templates</Title>
     <Authors>Kozelev Artem</Authors>
@@ -17,6 +17,9 @@
 
     <RepositoryUrl>https://github.com/Demonell/Demonel.MicroserviceTemplates</RepositoryUrl>
     <PackageReleaseNotes>
+      1.0.4
+      - Added Sorting, Filtering, Paging. Added JsonIgnoreQueryFilter. Fixed url paths and added GET /api/products/ method. 
+
       1.0.3
       - Removed return type from ProducesResponseType on 200-201 status codes
 

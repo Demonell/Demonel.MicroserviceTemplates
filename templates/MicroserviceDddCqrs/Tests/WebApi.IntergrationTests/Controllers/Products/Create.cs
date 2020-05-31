@@ -74,7 +74,7 @@ namespace WebApi.IntergrationTests.Controllers.Products
         [Fact]
         public async Task GivenAlreadyUsedName_ReturnsProductNameAlreadyInUseException()
         {
-            _command.Name = _factory.TestContext.TestProduct1.Name;
+            _command.Name = _factory.TestContext.TestProductCommon.Name;
 
             var content = Utilities.GetRequestContent(_command);
 

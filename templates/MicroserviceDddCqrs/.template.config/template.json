@@ -4,7 +4,8 @@
   "classifications": [ 
 	"CQRS",
 	"DDD",
-	"Microservice"
+	"Microservice",
+	"Template"
   ],
   "identity": "MicroserviceDddCqrs",
   "name": "Microservice DDD CQRS",

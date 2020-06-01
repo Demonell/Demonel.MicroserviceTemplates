@@ -2,9 +2,9 @@
 
 namespace Domain.Common
 {
-    public class AuditableEntity
+    public class AuditableEntity<T>
     {
-        public int Id { get; set; }
+        public T Id { get; set; }
         public string CreatedBy { get; set; }
         public DateTime Created { get; set; }
         public string LastModifiedBy { get; set; }

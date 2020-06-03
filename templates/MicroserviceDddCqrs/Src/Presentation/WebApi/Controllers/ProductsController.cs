@@ -87,8 +87,8 @@ namespace WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<int> Create([FromBody] CreateProductCommand command)
         {
-            HttpContext.Response.StatusCode = 201;
-            return await Mediator.Send(command);
+            var id = await Mediator.Send(command);
+            return Created(id);
         }
 
         /// <summary>

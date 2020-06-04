@@ -26,7 +26,7 @@ namespace Application.Common.Mappings
                     var methodInfo = instance.GetType().GetMethod("Mapping");
                     if (methodInfo != null)
                     {
-                        methodInfo?.Invoke(instance, new object[] {this});
+                        methodInfo.Invoke(instance, new object[] {this});
                     }
                     else
                     {

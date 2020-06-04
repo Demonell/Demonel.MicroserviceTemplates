@@ -7,7 +7,7 @@ namespace Application.Common.Mappings
     {
         public static IMappingExpression<TSource, TDestination> IgnoreAuditableProperties<TSource, TDestination>(
             this IMappingExpression<TSource, TDestination> expression)
-            where TDestination : AuditableEntity
+            where TDestination : Auditable
         {
             return expression.ForMember(d => d.Created, opt => opt.Ignore())
                 .ForMember(d => d.CreatedBy, opt => opt.Ignore())

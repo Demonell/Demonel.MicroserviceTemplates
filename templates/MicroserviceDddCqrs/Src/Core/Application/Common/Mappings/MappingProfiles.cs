@@ -14,17 +14,35 @@ namespace Application.Common.Mappings
 
         private void ApplyMappingsFromAssembly(Assembly assembly)
         {
-            var types = assembly.GetExportedTypes()
-                .Where(t => t.GetInterfaces().Any(i =>
-                    i.IsGenericType && (i.GetGenericTypeDefinition() == typeof(IMapFrom<>)
-                                        || i.GetGenericTypeDefinition() == typeof(IMapTo<>))))
-                .ToList();
-
-            foreach (var type in types)
+            foreach (var type in assembly.GetExportedTypes())
             {
-                var instance = Activator.CreateInstance(type);
-                var methodInfo = type.GetMethod("Mapping");
-                methodInfo?.Invoke(instance, new object[] {this});
+                var interfaces = type.GetInterfaces().Where(t => t.IsGenericType).ToList();
+                var mapFrom = interfaces.FirstOrDefault(i => i.GetGenericTypeDefinition() == typeof(IMapFrom<>));
+                var mapTo = interfaces.FirstOrDefault(i => i.GetGenericTypeDefinition() == typeof(IMapTo<>));
+
+                if (mapFrom != null || mapTo != null)
+                {
+                    var instance = Activator.CreateInstance(type);
+                    var methodInfo = instance.GetType().GetMethod("Mapping");
+                    if (methodInfo != null)
+                    {
+                        methodInfo?.Invoke(instance, new object[] {this});
+                    }
+                    else
+                    {
+                        if (mapFrom != null)
+                        {
+                            methodInfo = mapFrom.GetMethod("Mapping");
+                            methodInfo?.Invoke(instance, new object[] {this});
+                        }
+
+                        if (mapTo != null)
+                        {
+                            methodInfo = mapTo.GetMethod("Mapping");
+                            methodInfo?.Invoke(instance, new object[] {this});
+                        }
+                    }
+                }
             }
         }
     }

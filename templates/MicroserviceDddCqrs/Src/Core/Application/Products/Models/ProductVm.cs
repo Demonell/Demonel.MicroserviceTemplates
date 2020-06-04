@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Application.Common.Mappings;
-using AutoMapper;
 using Domain.Entities;
 
 namespace Application.Products.Models
@@ -29,10 +28,5 @@ namespace Application.Products.Models
         /// Материалы
         /// </summary>
         public List<MaterialVm> Materials { get; set; }
-
-        public void Mapping(Profile profile)
-        {
-            profile.CreateMap<Product, ProductVm>();
-        }
     }
 }

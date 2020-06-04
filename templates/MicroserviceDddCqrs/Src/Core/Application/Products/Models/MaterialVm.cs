@@ -1,6 +1,5 @@
 ﻿using System;
 using Application.Common.Mappings;
-using AutoMapper;
 using Domain.Entities;
 
 namespace Application.Products.Models
@@ -19,11 +18,5 @@ namespace Application.Products.Models
         /// Срок службы материала
         /// </summary>
         public TimeSpan Durability { get; set; }
-
-        public void Mapping(Profile profile)
-        {
-            profile.CreateMap<Material, MaterialVm>();
-            profile.CreateMap<MaterialVm, Material>();
-        }
     }
 }

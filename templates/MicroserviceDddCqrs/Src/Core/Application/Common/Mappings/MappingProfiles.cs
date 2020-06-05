@@ -23,7 +23,7 @@ namespace Application.Common.Mappings
                 if (mapFrom != null || mapTo != null)
                 {
                     var instance = Activator.CreateInstance(type);
-                    var methodInfo = instance.GetType().GetMethod("Mapping");
+                    var methodInfo = instance?.GetType().GetMethod("Mapping");
                     if (methodInfo != null)
                     {
                         methodInfo.Invoke(instance, new object[] {this});

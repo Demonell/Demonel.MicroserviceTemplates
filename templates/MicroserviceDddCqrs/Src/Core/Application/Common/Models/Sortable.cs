@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
 
 namespace Application.Common.Models
 {
@@ -16,7 +15,9 @@ namespace Application.Common.Models
         /// </summary>
         public string Sort { get; set; }
 
-        [JsonIgnore]
-        public List<Sort> Sorts => Sort?.Replace(" ", "").Split(',').Select(s => new Sort(s)).ToList() ?? new List<Sort>();
+        public List<Sort> Sorts()
+        {
+            return Sort?.Replace(" ", "").Split(',').Select(s => new Sort(s)).ToList() ?? new List<Sort>();
+        }
     }
 }

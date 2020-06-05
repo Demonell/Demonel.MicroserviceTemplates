@@ -32,7 +32,7 @@ namespace Application.Products.Queries.GetProducts
 
             query = Filter(query, request);
             var total = await query.CountAsync(cancellationToken);
-            query = Sort(query, request.Sorts);
+            query = Sort(query, request.Sorts());
             query = SkipTake(query, request);
 
             var products = await query.ToListAsync(cancellationToken);

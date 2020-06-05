@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageType>Template</PackageType>
-    <PackageVersion>1.0.4</PackageVersion>
+    <PackageVersion>1.0.5</PackageVersion>
     <PackageId>Demonel.MicroserviceTemplates</PackageId>
     <Title>Microservice Templates</Title>
     <Authors>Kozelev Artem</Authors>
@@ -17,6 +17,13 @@
 
     <RepositoryUrl>https://github.com/Demonell/Demonel.MicroserviceTemplates</RepositoryUrl>
     <PackageReleaseNotes>
+      1.0.5
+      - Removed JsonIgnoreQueryOperationFilter. 
+      - Sorts is now method. 
+      - Added implementation default Mapping void for IMapFrom and IMapTo interfaces without need to declare that void in class.
+      - Added Created method to BaseController for 201 HttpStatusCode.
+      - Renamed AuditableEntity to Auditable and removed Id property.
+      
       1.0.4
       - Added Sorting, Filtering, Paging. Added JsonIgnoreQueryFilter. Fixed url paths and added GET /api/products/ method. 
 

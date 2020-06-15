@@ -16,7 +16,7 @@ namespace Application.UnitTests.Common
         protected AppDbContext Context => TestContext.Context;
         protected IMapper Mapper { get; }
         protected Mock<ICurrentUserService> CurrentUserServiceMock { get; }
-        protected Mock<IDateTime> DateTimeMock { get; }
+        protected Mock<IDateTimeOffset> DateTimeMock { get; }
 
         public TestBase()
         {
@@ -27,8 +27,8 @@ namespace Application.UnitTests.Common
             CurrentUserServiceMock.Setup(m => m.UserId).Returns(TestUserId);
             CurrentUserServiceMock.Setup(m => m.IsAuthenticated).Returns(true);
 
-            DateTimeMock = new Mock<IDateTime>();
-            DateTimeMock.Setup(m => m.Now).Returns(DateTime.Now);
+            DateTimeMock = new Mock<IDateTimeOffset>();
+            DateTimeMock.Setup(m => m.Now).Returns(DateTimeOffset.Now);
 
             TestContext = new TestContext(CurrentUserServiceMock.Object, DateTimeMock.Object);
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Application.Common.Mappings;
 using Application.Products.Models;
 using AutoMapper;
@@ -10,7 +11,7 @@ namespace Application.Products.Commands.CreateProduct
     /// <summary>
     /// Команда создать продукт
     /// </summary>
-    public class CreateProductCommand : IRequest<int>, IMapTo<Product>
+    public class CreateProductCommand : IRequest<ProductVm>, IMapTo<Product>
     {
         /// <summary>
         /// Наименование продукта
@@ -21,6 +22,11 @@ namespace Application.Products.Commands.CreateProduct
         /// Тип продукта
         /// </summary>
         public ProductType ProductType { get; set; }
+
+        /// <summary>
+        /// Дата доставки
+        /// </summary>
+        public DateTimeOffset DeliveryDate { get; set; }
 
         /// <summary>
         /// Материалы

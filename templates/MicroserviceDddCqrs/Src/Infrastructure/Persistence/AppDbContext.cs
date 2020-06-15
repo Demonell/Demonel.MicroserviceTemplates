@@ -11,15 +11,15 @@ namespace Persistence
     public class AppDbContext : DbContext, IAppDbContext
     {
         private readonly ICurrentUserService _currentUserService;
-        private readonly IDateTime _dateTime;
+        private readonly IDateTimeOffset _dateTimeOffset;
 
         public AppDbContext(DbContextOptions<AppDbContext> options,
             ICurrentUserService currentUserService,
-            IDateTime dateTime)
+            IDateTimeOffset dateTimeOffset)
             : base(options)
         {
             _currentUserService = currentUserService;
-            _dateTime = dateTime;
+            _dateTimeOffset = dateTimeOffset;
         }
 
         public DbSet<Product> Products { get; set; }
@@ -32,11 +32,11 @@ namespace Persistence
                 {
                     case EntityState.Added:
                         entry.Entity.CreatedBy ??= _currentUserService.UserId;
-                        entry.Entity.Created = _dateTime.Now;
+                        entry.Entity.Created = _dateTimeOffset.Now;
                         break;
                     case EntityState.Modified:
                         entry.Entity.LastModifiedBy = _currentUserService.UserId;
-                        entry.Entity.LastModified = _dateTime.Now;
+                        entry.Entity.LastModified = _dateTimeOffset.Now;
                         break;
                 }
             }

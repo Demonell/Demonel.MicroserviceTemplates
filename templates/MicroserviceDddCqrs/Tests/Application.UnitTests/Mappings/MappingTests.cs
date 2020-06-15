@@ -47,6 +47,7 @@ namespace Application.UnitTests.Mappings
             {
                 Name = "Test",
                 ProductType = ProductType.Vip,
+                DeliveryDate = DateTimeOffset.Now,
                 Materials = new List<Material>
                 {
                     new Material("cutton", TimeSpan.FromDays(365)),
@@ -60,6 +61,7 @@ namespace Application.UnitTests.Mappings
             Assert.IsType<ProductVm>(result);
             Assert.Equal("Test", result.Name);
             Assert.Equal(ProductType.Vip, result.ProductType);
+            Assert.Equal(DateTimeOffset.Now.Year, result.DeliveryDate.Year);
             Assert.NotEmpty(result.Materials);
             Assert.NotEmpty(result.Materials.First().Name);
         }
@@ -71,6 +73,7 @@ namespace Application.UnitTests.Mappings
             {
                 Name = "Test",
                 ProductType = ProductType.Vip,
+                DeliveryDate = DateTimeOffset.Now,
                 Materials = new List<MaterialVm>
                 {
                     new MaterialVm {Name = "cutton", Durability = TimeSpan.FromDays(365)},
@@ -84,6 +87,7 @@ namespace Application.UnitTests.Mappings
             Assert.IsType<Product>(result);
             Assert.Equal("Test", result.Name);
             Assert.Equal(ProductType.Vip, result.ProductType);
+            Assert.Equal(DateTimeOffset.Now.Year, result.DeliveryDate.Year);
             Assert.Null(result.CreatedBy);
             Assert.NotEmpty(result.Materials);
             Assert.NotEmpty(result.Materials.First().Name);
@@ -98,6 +102,7 @@ namespace Application.UnitTests.Mappings
                 Id = 444,
                 Name = "Test",
                 ProductType = ProductType.Vip,
+                DeliveryDate = DateTimeOffset.Now,
                 Materials = new List<MaterialVm>
                 {
                     new MaterialVm {Name = "cutton", Durability = TimeSpan.FromDays(365)},
@@ -117,6 +122,7 @@ namespace Application.UnitTests.Mappings
             Assert.Equal(123, result.Id);
             Assert.Equal("Test", result.Name);
             Assert.Equal(ProductType.Vip, result.ProductType);
+            Assert.Equal(DateTimeOffset.Now.Year, result.DeliveryDate.Year);
             Assert.Null(result.CreatedBy);
             Assert.NotEmpty(result.Materials);
             Assert.NotEmpty(result.Materials.First().Name);

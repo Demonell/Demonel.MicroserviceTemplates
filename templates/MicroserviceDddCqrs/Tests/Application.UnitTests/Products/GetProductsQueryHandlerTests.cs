@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Common.Models;
 using Application.Products.Queries.GetProducts;
 using Application.UnitTests.Common;
 using Newtonsoft.Json;
@@ -61,6 +63,21 @@ namespace Application.UnitTests.Products
         }
 
         [Fact]
+        public async Task GivenProductDeliveryRangeFilter_ReturnTestProductVip1()
+        {
+            _query.DeliveryDate = new DateRange
+            {
+                From = DateTimeOffset.Now.AddHours(1),
+                To = DateTimeOffset.Now.AddHours(4)
+            };
+
+            var result = await _handler.Handle(_query, CancellationToken.None);
+
+            Assert.Single(result.Items);
+            Assert.Equal(TestContext.TestProductVip1.Id, result.Items.First().Id);
+        }
+
+        [Fact]
         public async Task GivenMaterialNameFilter_Return2VipProducts()
         {
             _query.MaterialName = "steel";
@@ -102,7 +119,7 @@ namespace Application.UnitTests.Products
         [Fact]
         public async Task GivenMultipleSorts_ReturnMultiSortedTotalListOfProductVm()
         {
-            _query.Sort = "+productType,-id";
+            _query.Sort = "+productType,-deliveryDate";
 
             var result = await _handler.Handle(_query, CancellationToken.None);
 
@@ -111,7 +128,7 @@ namespace Application.UnitTests.Products
             Assert.Equal(TestContext.TestProductVip1.Id, result.Items[2].Id);
 
 
-            _query.Sort = "-productType,-id";
+            _query.Sort = "-productType,-deliveryDate";
 
             result = await _handler.Handle(_query, CancellationToken.None);
 

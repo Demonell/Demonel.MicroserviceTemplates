@@ -73,7 +73,7 @@ namespace WebApi.Controllers
         ///     }
         ///
         /// </remarks>
-        /// <response code="201">Успех! Возвращает уникальный идентификатор созданного продукта</response>
+        /// <response code="201">Успех! Возвращает созданный объект</response>
         /// <response code="400">Ошибка валидации полей</response> 
         /// <response code="422">Ошибка обработки запроса
         /// <para>Возможные коды ответа:</para>
@@ -85,10 +85,10 @@ namespace WebApi.Controllers
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiErrorVm), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<int> Create([FromBody] CreateProductCommand command)
+        public async Task<ProductVm> Create([FromBody] CreateProductCommand command)
         {
-            var id = await Mediator.Send(command);
-            return Created(id);
+            var productVm = await Mediator.Send(command);
+            return Created(productVm);
         }
 
         /// <summary>

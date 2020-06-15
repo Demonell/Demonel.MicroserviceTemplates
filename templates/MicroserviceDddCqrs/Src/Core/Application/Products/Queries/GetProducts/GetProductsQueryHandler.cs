@@ -47,6 +47,8 @@ namespace Application.Products.Queries.GetProducts
                 (request.Id == null || request.Id == p.Id)
                 && (string.IsNullOrEmpty(request.Name) || EF.Functions.ILike(p.Name, $"%{request.Name}%"))
                 && (request.ProductType == null || request.ProductType == p.ProductType)
+                && (request.DeliveryDate == null || request.DeliveryDate.From == null || request.DeliveryDate.From <= p.DeliveryDate)
+                && (request.DeliveryDate == null || request.DeliveryDate.To == null || p.DeliveryDate <= request.DeliveryDate.To)
                 && (request.MaterialName == null ||
                     p.Materials.Any(m => EF.Functions.ILike(m.Name, $"%{request.MaterialName}%"))));
         }
@@ -61,6 +63,8 @@ namespace Application.Products.Queries.GetProducts
                     products = sort.Order(products, p => p.Name);
                 else if (nameof(GetProductsQuery.ProductType).Equals(sort.Field, StringComparison.InvariantCultureIgnoreCase))
                     products = sort.Order(products, p => p.ProductType);
+                else if (nameof(GetProductsQuery.DeliveryDate).Equals(sort.Field, StringComparison.InvariantCultureIgnoreCase))
+                    products = sort.Order(products, p => p.DeliveryDate);
                 else if (nameof(GetProductsQuery.MaterialName).Equals(sort.Field, StringComparison.InvariantCultureIgnoreCase))
                     products = sort.Order(products, p =>
                         (sort.Descending

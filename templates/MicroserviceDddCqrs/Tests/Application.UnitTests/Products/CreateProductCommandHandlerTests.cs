@@ -36,14 +36,15 @@ namespace Application.UnitTests.Products
         [Fact]
         public async Task GivenValidCommand_Pass()
         {
-            var id = await _handler.Handle(_command, CancellationToken.None);
+            var productVm = await _handler.Handle(_command, CancellationToken.None);
 
-            var product = await Context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            var product = await Context.Products.FirstOrDefaultAsync(p => p.Id == productVm.Id);
 
             Assert.NotNull(product);
             Assert.Equal("test", product.Name);
+            Assert.Equal("test", productVm.Name);
             Assert.Equal(TestUserId, product.CreatedBy);
-            Assert.Equal(DateTime.Now.Year, product.Created.Year);
+            Assert.Equal(DateTimeOffset.Now.Year, product.Created.Year);
         }
 
         [Fact]
@@ -51,9 +52,9 @@ namespace Application.UnitTests.Products
         {
             _command.Materials = null;
 
-            var id = await _handler.Handle(_command, CancellationToken.None);
+            var productVm = await _handler.Handle(_command, CancellationToken.None);
 
-            var product = await Context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            var product = await Context.Products.FirstOrDefaultAsync(p => p.Id == productVm.Id);
 
             Assert.NotNull(product);
             Assert.Empty(product.Materials);

@@ -7,7 +7,7 @@ namespace Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
-            services.AddTransient<IDateTime, MachineDateTime>();
+            services.AddTransient<IDateTimeOffset, MachineDateTimeOffset>();
             return services;
         }
     }

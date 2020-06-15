@@ -42,7 +42,7 @@ namespace Application.UnitTests.Products
             var product = await Context.Products.FirstOrDefaultAsync(u => u.Id == _command.Id);
 
             Assert.Equal(TestUserId, product.LastModifiedBy);
-            Assert.Equal(DateTime.Now.Year, product.LastModified?.Year);
+            Assert.Equal(DateTimeOffset.Now.Year, product.LastModified?.Year);
         }
 
         [Fact]

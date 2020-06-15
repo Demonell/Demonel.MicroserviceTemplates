@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Domain.Common;
 
 namespace Domain.Entities
@@ -7,7 +8,8 @@ namespace Domain.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<Material> Materials { get; set; }
         public ProductType ProductType { get; set; }
+        public DateTimeOffset DeliveryDate { get; set; }
+        public List<Material> Materials { get; set; }
     }
 }

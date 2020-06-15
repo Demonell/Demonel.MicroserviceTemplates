@@ -104,6 +104,7 @@ namespace WebApi
                 {
                     options.Authority = appOptions.IdentityUrl;
                     options.Audience = appOptions.ApplicationName.ToLower();
+                    options.RequireHttpsMetadata = false;
                 });
         }
 

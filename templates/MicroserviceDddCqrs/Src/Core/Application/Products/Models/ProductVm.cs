@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Application.Common.Mappings;
 using Domain.Entities;
 
@@ -23,6 +24,11 @@ namespace Application.Products.Models
         /// Тип продукта
         /// </summary>
         public ProductType ProductType { get; set; }
+
+        /// <summary>
+        /// Дата доставки
+        /// </summary>
+        public DateTimeOffset DeliveryDate { get; set; }
 
         /// <summary>
         /// Материалы

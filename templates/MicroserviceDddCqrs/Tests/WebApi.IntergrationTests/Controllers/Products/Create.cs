@@ -49,10 +49,10 @@ namespace WebApi.IntergrationTests.Controllers.Products
 
             response.EnsureSuccessStatusCode();
 
-            var id = await Utilities.GetResponseContent<int>(response);
+            var model = await Utilities.GetResponseContent<ProductVm>(response);
 
-            Assert.IsType<int>(id);
-            Assert.True(id > 0);
+            Assert.IsType<ProductVm>(model);
+            Assert.True(model.Id > 0);
         }
 
         [Fact]

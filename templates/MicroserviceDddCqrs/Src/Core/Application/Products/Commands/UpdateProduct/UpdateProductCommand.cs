@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Application.Common.Mappings;
 using Application.Products.Models;
 using AutoMapper;
@@ -28,6 +29,11 @@ namespace Application.Products.Commands.UpdateProduct
         /// Тип продукта
         /// </summary>
         public ProductType ProductType { get; set; }
+
+        /// <summary>
+        /// Дата доставки
+        /// </summary>
+        public DateTimeOffset DeliveryDate { get; set; }
 
         /// <summary>
         /// Материалы

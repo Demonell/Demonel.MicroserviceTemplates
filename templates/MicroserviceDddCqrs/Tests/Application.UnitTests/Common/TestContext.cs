@@ -11,15 +11,15 @@ namespace Application.UnitTests.Common
     public class TestContext : IDisposable
     {
         private readonly ICurrentUserService _currentUserService;
-        private readonly IDateTime _dateTime;
+        private readonly IDateTimeOffset _dateTimeOffset;
 
         public readonly string DatabaseName = Guid.NewGuid().ToString();
         public AppDbContext Context { get; }
 
-        public TestContext(ICurrentUserService currentUserService, IDateTime dateTime)
+        public TestContext(ICurrentUserService currentUserService, IDateTimeOffset dateTimeOffset)
         {
             _currentUserService = currentUserService;
-            _dateTime = dateTime;
+            _dateTimeOffset = dateTimeOffset;
             Context = CreateDbContext();
             InitializeDbForTests();
 
@@ -39,7 +39,7 @@ namespace Application.UnitTests.Common
                 .UseInMemoryDatabase(DatabaseName)
                 .Options;
 
-            var context = new AppDbContext(options, _currentUserService, _dateTime);
+            var context = new AppDbContext(options, _currentUserService, _dateTimeOffset);
 
             context.Database.EnsureCreated();
 
@@ -56,6 +56,7 @@ namespace Application.UnitTests.Common
             {
                 Name = nameof(TestProductCommon),
                 ProductType = ProductType.Common,
+                DeliveryDate = DateTimeOffset.Now,
                 Materials = new List<Material>
                 {
                     new Material("wood", TimeSpan.FromDays(365)),
@@ -69,6 +70,7 @@ namespace Application.UnitTests.Common
             {
                 Name = nameof(TestProductVip1),
                 ProductType = ProductType.Vip,
+                DeliveryDate = DateTimeOffset.Now.AddHours(2),
                 Materials = new List<Material>
                 {
                     new Material("steel", TimeSpan.FromDays(16 * 365)),
@@ -82,6 +84,7 @@ namespace Application.UnitTests.Common
             {
                 Name = nameof(TestProductVip2),
                 ProductType = ProductType.Vip,
+                DeliveryDate = DateTimeOffset.Now.AddDays(2),
                 Materials = new List<Material>
                 {
                     new Material("obsidian", TimeSpan.FromDays(8 * 365)),

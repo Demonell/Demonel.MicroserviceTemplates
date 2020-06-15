@@ -32,22 +32,24 @@ namespace Application.System.Commands.SeedSampleData
                     new Product
                     {
                         Name = "Sample Product Common",
+                        ProductType = ProductType.Common,
+                        DeliveryDate = DateTimeOffset.Now,
                         Materials = new List<Material>
                         {
                             new Material("wood", TimeSpan.FromDays(365 * 1)),
                             new Material("iron", TimeSpan.FromDays(365 * 4))
-                        },
-                        ProductType = ProductType.Common
+                        }
                     },
                     new Product
                     {
                         Name = "Sample Product Vip",
+                        ProductType = ProductType.Vip,
+                        DeliveryDate = DateTimeOffset.Now.AddDays(2),
                         Materials = new List<Material>
                         {
                             new Material("steel", TimeSpan.FromDays(365 * 16)),
                             new Material("cutton", TimeSpan.FromDays(365 * 2))
-                        },
-                        ProductType = ProductType.Vip
+                        }
                     }
                 }, cancellationToken);
 

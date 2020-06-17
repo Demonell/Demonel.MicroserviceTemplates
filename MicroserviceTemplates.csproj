@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageType>Template</PackageType>
-    <PackageVersion>1.0.6</PackageVersion>
+    <PackageVersion>1.0.7</PackageVersion>
     <PackageId>Demonel.MicroserviceTemplates</PackageId>
     <Title>Microservice Templates</Title>
     <Authors>Kozelev Artem</Authors>
@@ -17,6 +17,9 @@
 
     <RepositoryUrl>https://github.com/Demonell/Demonel.MicroserviceTemplates</RepositoryUrl>
     <PackageReleaseNotes>
+      1.0.7
+      - Fixed migrations
+	  
       1.0.6
       - Added DateRange class with filtering
       - Added DeliveryDate property to Product

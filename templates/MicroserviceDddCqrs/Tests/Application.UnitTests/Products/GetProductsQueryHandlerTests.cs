@@ -67,8 +67,8 @@ namespace Application.UnitTests.Products
         {
             _query.DeliveryDate = new DateRange
             {
-                From = DateTimeOffset.Now.AddHours(1),
-                To = DateTimeOffset.Now.AddHours(4)
+                From = DateTime.Now.AddHours(1),
+                To = DateTime.Now.AddHours(4)
             };
 
             var result = await _handler.Handle(_query, CancellationToken.None);

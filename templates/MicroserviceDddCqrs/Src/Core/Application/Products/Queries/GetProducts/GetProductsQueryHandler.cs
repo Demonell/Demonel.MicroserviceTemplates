@@ -47,8 +47,8 @@ namespace Application.Products.Queries.GetProducts
                 (request.Id == null || request.Id == p.Id)
                 && (string.IsNullOrEmpty(request.Name) || EF.Functions.ILike(p.Name, $"%{request.Name}%"))
                 && (request.ProductType == null || request.ProductType == p.ProductType)
-                && (request.DeliveryDate == null || request.DeliveryDate.From == null || request.DeliveryDate.From <= p.DeliveryDate)
-                && (request.DeliveryDate == null || request.DeliveryDate.To == null || p.DeliveryDate <= request.DeliveryDate.To)
+                && (request.DeliveryDate == null || request.DeliveryDate.From == null || request.DeliveryDate.From.Value.Date <= p.DeliveryDate)
+                && (request.DeliveryDate == null || request.DeliveryDate.To == null || p.DeliveryDate < request.DeliveryDate.To.Value.Date.AddDays(1))
                 && (request.MaterialName == null ||
                     p.Materials.Any(m => EF.Functions.ILike(m.Name, $"%{request.MaterialName}%"))));
         }

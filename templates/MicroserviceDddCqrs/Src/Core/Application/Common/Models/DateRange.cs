@@ -10,11 +10,11 @@ namespace Application.Common.Models
         /// <summary>
         /// Начальная дата
         /// </summary>
-        public DateTimeOffset? From { get; set; }
+        public DateTime? From { get; set; }
         
         /// <summary>
         /// Конечная дата
         /// </summary>
-        public DateTimeOffset? To { get; set; }
+        public DateTime? To { get; set; }
     }
 }

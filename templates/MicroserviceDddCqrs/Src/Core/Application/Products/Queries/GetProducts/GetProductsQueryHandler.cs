@@ -8,6 +8,7 @@ using Application.Common.Interfaces;
 using Application.Common.Models;
 using Application.Products.Models;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Domain.Entities;
 using FluentValidation.Results;
 using MediatR;
@@ -35,10 +36,11 @@ namespace Application.Products.Queries.GetProducts
             query = Sort(query, request.Sorts());
             query = SkipTake(query, request);
 
-            var products = await query.ToListAsync(cancellationToken);
-            var productsVm = _mapper.Map<List<ProductVm>>(products);
+            var products = await query
+                .ProjectTo<ProductVm>(_mapper.ConfigurationProvider)
+                .ToListAsync(cancellationToken);
 
-            return new TotalList<ProductVm>(productsVm, total);
+            return new TotalList<ProductVm>(products, total);
         }
 
         private IQueryable<Product> Filter(IQueryable<Product> products, GetProductsQuery request)
@@ -47,8 +49,10 @@ namespace Application.Products.Queries.GetProducts
                 (request.Id == null || request.Id == p.Id)
                 && (string.IsNullOrEmpty(request.Name) || EF.Functions.ILike(p.Name, $"%{request.Name}%"))
                 && (request.ProductType == null || request.ProductType == p.ProductType)
-                && (request.DeliveryDate == null || request.DeliveryDate.From == null || request.DeliveryDate.From.Value.Date <= p.DeliveryDate)
-                && (request.DeliveryDate == null || request.DeliveryDate.To == null || p.DeliveryDate < request.DeliveryDate.To.Value.Date.AddDays(1))
+                && (request.DeliveryDate == null || request.DeliveryDate.From == null ||
+                    request.DeliveryDate.From.Value <= p.DeliveryDate)
+                && (request.DeliveryDate == null || request.DeliveryDate.To == null ||
+                    p.DeliveryDate <= request.DeliveryDate.To.Value)
                 && (request.MaterialName == null ||
                     p.Materials.Any(m => EF.Functions.ILike(m.Name, $"%{request.MaterialName}%"))));
         }
@@ -61,11 +65,14 @@ namespace Application.Products.Queries.GetProducts
                     products = sort.Order(products, p => p.Id);
                 else if (nameof(GetProductsQuery.Name).Equals(sort.Field, StringComparison.InvariantCultureIgnoreCase))
                     products = sort.Order(products, p => p.Name);
-                else if (nameof(GetProductsQuery.ProductType).Equals(sort.Field, StringComparison.InvariantCultureIgnoreCase))
+                else if (nameof(GetProductsQuery.ProductType)
+                    .Equals(sort.Field, StringComparison.InvariantCultureIgnoreCase))
                     products = sort.Order(products, p => p.ProductType);
-                else if (nameof(GetProductsQuery.DeliveryDate).Equals(sort.Field, StringComparison.InvariantCultureIgnoreCase))
+                else if (nameof(GetProductsQuery.DeliveryDate)
+                    .Equals(sort.Field, StringComparison.InvariantCultureIgnoreCase))
                     products = sort.Order(products, p => p.DeliveryDate);
-                else if (nameof(GetProductsQuery.MaterialName).Equals(sort.Field, StringComparison.InvariantCultureIgnoreCase))
+                else if (nameof(GetProductsQuery.MaterialName)
+                    .Equals(sort.Field, StringComparison.InvariantCultureIgnoreCase))
                     products = sort.Order(products, p =>
                         (sort.Descending
                             ? p.Materials.OrderByDescending(m => m.Name)

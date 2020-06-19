@@ -25,7 +25,7 @@ namespace Application.Products.Queries.GetProducts
         /// <summary>
         /// Период дат доставки
         /// </summary>
-        public DateRange DeliveryDate { get; set; }
+        public DateTimeOffsetRange DeliveryDate { get; set; }
 
         /// <summary>
         /// Наименование материала

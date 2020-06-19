@@ -65,10 +65,10 @@ namespace Application.UnitTests.Products
         [Fact]
         public async Task GivenProductDeliveryRangeFilter_ReturnTestProductVip1()
         {
-            _query.DeliveryDate = new DateRange
+            _query.DeliveryDate = new DateTimeOffsetRange
             {
-                From = DateTime.Now.AddHours(1),
-                To = DateTime.Now.AddHours(4)
+                From = DateTimeOffset.Now.AddHours(1),
+                To = DateTimeOffset.Now.AddHours(4)
             };
 
             var result = await _handler.Handle(_query, CancellationToken.None);

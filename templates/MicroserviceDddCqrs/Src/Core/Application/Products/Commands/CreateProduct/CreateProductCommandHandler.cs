@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Products.Commands.CreateProduct
 {
-    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, ProductVm>
+    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, int>
     {
         private readonly IAppDbContext _context;
         private readonly IMapper _mapper;
@@ -21,7 +21,7 @@ namespace Application.Products.Commands.CreateProduct
             _mapper = mapper;
         }
 
-        public async Task<ProductVm> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
             var anyProductWithSameName = await _context.Products.AnyAsync(p => p.Name == request.Name, cancellationToken);
             if (anyProductWithSameName)
@@ -33,9 +33,7 @@ namespace Application.Products.Commands.CreateProduct
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            var productVm = _mapper.Map<ProductVm>(product);
-
-            return productVm;
+            return product.Id;
         }
     }
 }

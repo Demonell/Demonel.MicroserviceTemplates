@@ -11,7 +11,7 @@ namespace Application.Products.Commands.CreateProduct
     /// <summary>
     /// Команда создать продукт
     /// </summary>
-    public class CreateProductCommand : IRequest<ProductVm>, IMapTo<Product>
+    public class CreateProductCommand : IRequest<int>, IMapTo<Product>
     {
         /// <summary>
         /// Наименование продукта

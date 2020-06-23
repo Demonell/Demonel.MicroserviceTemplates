@@ -25,7 +25,7 @@ namespace Application.System.Commands.SeedSampleData
         public async Task SeedProducts(CancellationToken cancellationToken)
         {
             var anyProducts = await _context.Products.AnyAsync(cancellationToken);
-            if (!anyProducts)
+            if (anyProducts)
             {
                 await _context.Products.AddRangeAsync(new List<Product>
                 {

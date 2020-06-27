@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageType>Template</PackageType>
-    <PackageVersion>1.0.8</PackageVersion>
+    <PackageVersion>1.0.9</PackageVersion>
     <PackageId>Demonel.MicroserviceTemplates</PackageId>
     <Title>Microservice Templates</Title>
     <Authors>Kozelev Artem</Authors>
@@ -17,6 +17,10 @@
 
     <RepositoryUrl>https://github.com/Demonell/Demonel.MicroserviceTemplates</RepositoryUrl>
     <PackageReleaseNotes>
+      1.0.9
+      - MicroserviceDddCqrs project name renames to name parameter at dotnet new
+	  - Create command return only object id
+	  
       1.0.8
       - Added ProjectTo to query requests.
 	  

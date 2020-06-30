@@ -27,7 +27,7 @@ namespace Application.System.Commands.SeedSampleData
             var anyProducts = await _context.Products.AnyAsync(cancellationToken);
             if (anyProducts)
             {
-                await _context.Products.AddRangeAsync(new List<Product>
+                _context.Products.AddRange(new List<Product>
                 {
                     new Product
                     {
@@ -51,7 +51,7 @@ namespace Application.System.Commands.SeedSampleData
                             new Material("cutton", TimeSpan.FromDays(365 * 2))
                         }
                     }
-                }, cancellationToken);
+                });
 
                 await _context.SaveChangesAsync(cancellationToken);
             }

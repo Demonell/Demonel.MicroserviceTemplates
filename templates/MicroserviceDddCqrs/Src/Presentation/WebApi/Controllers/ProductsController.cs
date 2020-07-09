@@ -31,7 +31,7 @@ namespace WebApi.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<TotalList<ProductVm>> Get([FromQuery] GetProductsQuery query)
+        public async Task<TotalList<ProductVm>> GetAll([FromQuery] GetProductsQuery query)
         {
             return await Mediator.Send(query);
         }

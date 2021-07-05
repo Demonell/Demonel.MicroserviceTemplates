@@ -1,3 +1,4 @@
+using System;
 using Application;
 using Application.Common.Interfaces;
 using FluentValidation.AspNetCore;
@@ -15,6 +16,7 @@ using Newtonsoft.Json.Converters;
 using NSwag.AspNetCore;
 using Persistence;
 using WebApi.Filters;
+using WebApi.HostedServices;
 using WebApi.Middlewares;
 using WebApi.Options;
 using WebApi.Services;
@@ -55,10 +57,14 @@ namespace WebApi
                     options.SerializerSettings.Converters.Add(new StringEnumConverter());
                 })
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<IAppDbContext>());
+
+            services.AddHostedService<MigrationHostedService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IOptionsMonitor<AppOptions> appOptions)
         {
+            Console.Title = env.ApplicationName;
+
             app.UseCustomMetrics();
             app.UseCustomHealthCheck("/hc");
 
